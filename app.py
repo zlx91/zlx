@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import pandas as pd
 from flask_cors import CORS
 import json
@@ -6,10 +6,10 @@ import os
 import logging
 
 app = Flask(__name__)
-CORS(app)  # 允许所有源的跨域请求，可根据实际需求设置更具体的跨域规则
+CORS(app,origins="https://zlx91.github.io/zlx/")  # 允许所有源的跨域请求，可根据实际需求设置更具体的跨域规则
 
 def compare_strings(df):
-    result_df = pd.DataFrame(index=df.index,columns=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N'])
+    result_df = pd.DataFrame(index=df.index,columns=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N','O', 'P'])
     result_df['A'] = df['A']  # 复制A列
     result_df['B'] = df['B']  # 复制B列
 
@@ -28,6 +28,8 @@ def compare_strings(df):
             result_df.loc[index, 'L'] = None
             result_df.loc[index, 'M'] = None
             result_df.loc[index, 'N'] = None
+            result_df.loc[index, 'O'] = None
+            result_df.loc[index, 'P'] = None
         else:
             # 从第四行开始计算
             all_a_nums_prev = set()
@@ -61,8 +63,11 @@ def compare_strings(df):
             result_df.loc[index, 'H'] = intersection_count
 
             # 更新其他列
-            result_df.loc[index, 'C'] = len(all_a_nums_prev)
-            result_df.loc[index, 'E'] = len(all_b_nums_prev)
+            same_a_nums = set(all_a_nums_prev)
+            result_df.loc[index, 'C'] = f"{same_a_nums}: {len(same_a_nums)}"
+            same_b_nums = set(all_b_nums_prev)
+            result_df.loc[index, 'E'] = f"{same_b_nums}: {len(same_b_nums)}"
+
             result_df.loc[index, 'G'] = str(all_a_nums_prev.intersection(all_b_nums_prev))
             b_value = row['B']
             b_int_value = int(b_value)
@@ -80,6 +85,13 @@ def compare_strings(df):
                 result_df.loc[
                     index, 'M'] = f'{"小" if 0 <= a <= 4 else "大"}{"小" if 0 <= b <= 4 else "大"}{"小" if 0 <= c <= 4 else "大"}'
             result_df.loc[index, 'L'] = int((a + b + c) % 10)
+            small_count = sum(1 for x in [a, b, c] if 0 <= x <= 4)
+            large_count = sum(1 for x in [a, b, c] if 5 <= x <= 9)
+            result_df.loc[index, 'N'] = f"{small_count}:{large_count}"
+            # 计算奇偶个数的比例并填充 P 列
+            odd_count = sum(1 for x in [a, b, c] if x % 2 != 0)
+            even_count = sum(1 for x in [a, b, c] if x % 2 == 0)
+            result_df.loc[index, 'P'] = f"{odd_count}:{even_count}"
             if a % 2 == 0:
                 a_status = '偶'
             else:
@@ -94,7 +106,7 @@ def compare_strings(df):
                 c_status = '偶'
             else:
                 c_status = '奇'
-            result_df.loc[index, 'N'] = f"{a_status}{b_status}{c_status}"
+            result_df.loc[index, 'O'] = f"{a_status}{b_status}{c_status}"
             if remainder_3 == 0:
                 result_df.loc[index, 'I'] = remainder_3
                 result_df.loc[index, 'J'] = None
