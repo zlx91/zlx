@@ -6,7 +6,7 @@ import os
 import logging
 
 app = Flask(__name__)
-CORS(app,origins="https://zlx91.github.io/zlx/")  # 允许所有源的跨域请求，可根据实际需求设置更具体的跨域规则
+CORS(app)  # 允许所有源的跨域请求，可根据实际需求设置更具体的跨域规则
 
 def compare_strings(df):
     result_df = pd.DataFrame(index=df.index,columns=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N','O', 'P'])
