@@ -234,7 +234,7 @@
 
       // 创建AJAX请求对象，用于与后端进行数据交互
       const xhr = new XMLHttpRequest();
-      xhr.open('POST', 'http://127.0.0.1:5000/compare_strings', true);
+      xhr.open('POST', 'https://zlx91.github.io/zlx/compare_strings', true);
       xhr.setRequestHeader('Content-Type', 'application/json');
 
       xhr.onreadystatechange = function () {
@@ -262,7 +262,7 @@ clearHistoryButton.addEventListener('click', function () {
   }
 
   const xhr = new XMLHttpRequest();
-  xhr.open('DELETE', 'http://127.0.0.1:5000/clear_history_data', true);
+  xhr.open('DELETE', 'https://zlx91.github.io/zlx/clear_history_data', true);
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
       const response = JSON.parse(xhr.responseText);
@@ -286,7 +286,7 @@ clearHistoryButton.addEventListener('click', function () {
 // 删除最后一行按钮的点击事件处理函数
   deleteLastRowButton.addEventListener('click', function () {
   const xhr = new XMLHttpRequest();
-  xhr.open('DELETE', 'http://127.0.0.1:5000/delete_last_row_data', true);
+  xhr.open('DELETE', 'https://zlx91.github.io/zlx/delete_last_row_data', true);
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
@@ -341,7 +341,7 @@ clearHistoryButton.addEventListener('click', function () {
       const headerRow = document.createElement('tr');
 
       // 创建表头行，设置各列的标题
-      const headers = ['数', '--试--', '--定--', '试', 'D列', '定', 'F列', '胆', 'H列', '余0', '余1', '余2', '尾值', '大小', '奇偶'];
+      const headers = ['数', '--试--', '--定--', '试', 'D列', '定', 'F列', '胆', 'H列', '0', '1', '2', '尾值', '大小','比', '奇偶','比'];
       headers.forEach(header => {
         const th = document.createElement('th');
         th.textContent = header;
@@ -372,7 +372,7 @@ clearHistoryButton.addEventListener('click', function () {
 
         const cCell = document.createElement('td');
         cCell.textContent = result['C'] && result['C'].length > i? result['C'][i] : '';
-        cCell.style.backgroundColor = '#e6f7ff';
+        cCell.style.backgroundColor = '#bed9d7';
         row.appendChild(cCell);
 
         // 创建D列单元格，根据是否存在对应数据进行显示，不存在则显示为空字符串
@@ -384,7 +384,7 @@ clearHistoryButton.addEventListener('click', function () {
         // 创建E列单元格，根据是否存在对应数据进行显示，不存在则显示为空字符串
         const eCell = document.createElement('td');
         eCell.textContent = result['E'] && (result['E'].length > i? result['E'][i] : '');
-        eCell.style.backgroundColor = '#e6f7ff';
+        eCell.style.backgroundColor = '#bed9d7';
         row.appendChild(eCell);
 
         // 创建F列单元格，根据是否存在对应数据进行显示，不存在则显示为空字符串
@@ -396,7 +396,7 @@ clearHistoryButton.addEventListener('click', function () {
         // 创建G列单元格，根据是否存在对应数据进行显示，不存在则显示为空字符串
         const gCell = document.createElement('td');
         gCell.textContent = result['G'] && (result['G'].length > i? result['G'][i] : '');
-        gCell.style.backgroundColor = '#e6f7ff';
+        gCell.style.backgroundColor = '#bed9d7';
         row.appendChild(gCell);
 
         // 创建H列单元格，根据是否存在对应数据进行显示，不存在则显示为空字符串
@@ -408,19 +408,19 @@ clearHistoryButton.addEventListener('click', function () {
         // 创建I列单元格，根据是否存在对应数据进行显示，不存在则以空字符串显示
         const iCell = document.createElement('td');
         iCell.textContent = result['I'] && (result['I'].length > i? result['I'][i] : '');
-        iCell.style.backgroundColor = '#e6f7ff';
+        iCell.style.backgroundColor = '#bed9d7';
         row.appendChild(iCell);
 
         // 创建J列单元格，根据是否存在对应数据进行显示，不存在则以空字符串显示
         const jCell = document.createElement('td');
         jCell.textContent = result['J'] && (result['J'].length > i? result['J'][i] : '');
-        jCell.style.backgroundColor = '#fff5e6';
+        jCell.style.backgroundColor = '#bed9d7';
         row.appendChild(jCell);
 
         // 创建K列单元格，根据是否存在对应数据进行显示，不存在则以空字符串显示
         const kCell = document.createElement('td');
         kCell.textContent = result['K'] && (result['K'].length > i? result['K'][i] : '');
-        kCell.style.backgroundColor = '#e6f7ff';
+        kCell.style.backgroundColor = '#bed9d7';
         row.appendChild(kCell);
 
         // 创建L列单元格，根据是否存在对应数据进行显示，不存在则以空字符串显示
@@ -432,7 +432,7 @@ clearHistoryButton.addEventListener('click', function () {
         // 创建M列单元格，根据是否存在对应数据进行显示，不存在则以空字符串显示
         const mCell = document.createElement('td');
         mCell.textContent = result['M'] && (result['M'].length > i? result['M'][i] : '');
-        mCell.style.backgroundColor = '#e6f7ff';
+        mCell.style.backgroundColor = '#bed9d7';
         row.appendChild(mCell);
 
         // 创建N列单元格，根据是否存在对应数据进行显示，不存在则以空字符串显示
@@ -440,7 +440,16 @@ clearHistoryButton.addEventListener('click', function () {
         nCell.textContent = result['N'] && (result['N'].length > i? result['N'][i] : '');
         nCell.style.backgroundColor = '#fff5e6';
         row.appendChild(nCell);
-
+        // 创建N列单元格，根据是否存在对应数据进行显示，不存在则以空字符串显示
+        const oCell = document.createElement('td');
+        oCell.textContent = result['O'] && (result['O'].length > i? result['O'][i] : '');
+        oCell.style.backgroundColor = '#bed9d7';
+        row.appendChild(oCell);
+          // 创建N列单元格，根据是否存在对应数据进行显示，不存在则以空字符串显示
+        const pCell = document.createElement('td');
+        pCell.textContent = result['P'] && (result['P'].length > i? result['P'][i] : '');
+        pCell.style.backgroundColor = '#fff5e6';
+        row.appendChild(pCell);
 
         // 将当前行添加到表格中
         table.appendChild(row);
@@ -455,7 +464,7 @@ clearHistoryButton.addEventListener('click', function () {
         data = JSON.parse(savedData);
         // 创建AJAX请求对象，用于与后端进行数据交互
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://127.0.0.1:5000/compare_strings', true);
+        xhr.open('POST', 'https://zlx91.github.io/zlx/compare_strings', true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onreadystatechange = function () {
           // 当请求状态改变时执行以下逻辑
